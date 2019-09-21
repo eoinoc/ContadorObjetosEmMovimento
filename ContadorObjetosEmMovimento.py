@@ -3,6 +3,9 @@ import math
 import cv2
 import numpy as np
 
+# Couning objects with OpenCV
+# https://www.hackster.io/phfbertoleti/counting-objects-in-movement-using-raspberry-pi-opencv-015ba5
+
 #variaveis globais
 width = 0
 height = 0
