@@ -102,7 +102,7 @@ while True:
         #determina o ponto central do contorno e desenha um circulo para indicar
         CoordenadaXCentroContorno = (x+x+w)/2
         CoordenadaYCentroContorno = (y+y+h)/2
-        PontoCentralContorno = (CoordenadaXCentroContorno,CoordenadaYCentroContorno)
+        PontoCentralContorno = int((CoordenadaXCentroContorno,CoordenadaYCentroContorno))
         cv2.circle(Frame, PontoCentralContorno, 1, (0, 0, 0), 5)
         
         #testa interseccao dos centros dos contornos com as linhas de referencia
