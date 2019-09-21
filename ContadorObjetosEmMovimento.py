@@ -100,9 +100,9 @@ while True:
         cv2.rectangle(Frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         #determina o ponto central do contorno e desenha um circulo para indicar
-        CoordenadaXCentroContorno = (x+x+w)/2
-        CoordenadaYCentroContorno = (y+y+h)/2
-        PontoCentralContorno = int((CoordenadaXCentroContorno,CoordenadaYCentroContorno))
+        CoordenadaXCentroContorno = int((x+x+w)/2)
+        CoordenadaYCentroContorno = int((y+y+h)/2)
+        PontoCentralContorno = (CoordenadaXCentroContorno,CoordenadaYCentroContorno)
         cv2.circle(Frame, PontoCentralContorno, 1, (0, 0, 0), 5)
         
         #testa interseccao dos centros dos contornos com as linhas de referencia
@@ -127,7 +127,8 @@ while True:
     cv2.putText(Frame, "Saidas: {}".format(str(ContadorSaidas)), (10, 70),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
     cv2.imshow("Original", Frame)
-    cv2.waitKey(1);
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
 
 # cleanup the camera and close any open windows
