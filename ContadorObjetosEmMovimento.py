@@ -14,21 +14,21 @@ OffsetLinhasRef = 150  #este valor eh empirico. Ajuste- conforme sua necessidade
 
 #Verifica se o corpo detectado esta entrando da sona monitorada
 def TestaInterseccaoEntrada(y, CoordenadaYLinhaEntrada, CoordenadaYLinhaSaida):
-        DiferencaAbsoluta = abs(y - CoordenadaYLinhaEntrada)	
+    DiferencaAbsoluta = abs(y - CoordenadaYLinhaEntrada)
 
-        if ((DiferencaAbsoluta <= 2) and (y < CoordenadaYLinhaSaida)):
-		return 1
-	else:
-		return 0
+    if ((DiferencaAbsoluta <= 2) and (y < CoordenadaYLinhaSaida)):
+        return 1
+    else:
+        return 0
 
 #Verifica se o corpo detectado esta saindo da sona monitorada
 def TestaInterseccaoSaida(y, CoordenadaYLinhaEntrada, CoordenadaYLinhaSaida):
-        DiferencaAbsoluta = abs(y - CoordenadaYLinhaSaida)	
+    DiferencaAbsoluta = abs(y - CoordenadaYLinhaSaida)
 
-	if ((DiferencaAbsoluta <= 2) and (y > CoordenadaYLinhaEntrada)):
-		return 1
-	else:
-		return 0
+    if ((DiferencaAbsoluta <= 2) and (y > CoordenadaYLinhaEntrada)):
+        return 1
+    else:
+        return 0
 
 camera = cv2.VideoCapture(0)
 
@@ -72,7 +72,7 @@ while True:
     #Dessa forma, objetos detectados serao considerados uma "massa" de cor preta 
     #Alem disso, encontra os contornos apos dilatacao.
     FrameThresh = cv2.dilate(FrameThresh, None, iterations=2)
-    _, cnts, _ = cv2.findContours(FrameThresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cnts, _ = cv2.findContours(FrameThresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     QtdeContornos = 0
 
@@ -101,26 +101,25 @@ while True:
 
         #determina o ponto central do contorno e desenha um circulo para indicar
         CoordenadaXCentroContorno = (x+x+w)/2
-	CoordenadaYCentroContorno = (y+y+h)/2
+        CoordenadaYCentroContorno = (y+y+h)/2
         PontoCentralContorno = (CoordenadaXCentroContorno,CoordenadaYCentroContorno)
         cv2.circle(Frame, PontoCentralContorno, 1, (0, 0, 0), 5)
         
         #testa interseccao dos centros dos contornos com as linhas de referencia
         #dessa forma, contabiliza-se quais contornos cruzaram quais linhas (num determinado sentido)
-	if (TestaInterseccaoEntrada(CoordenadaYCentroContorno,CoordenadaYLinhaEntrada,CoordenadaYLinhaSaida)):
-            ContadorEntradas += 1
 
-	if (TestaInterseccaoSaida(CoordenadaYCentroContorno,CoordenadaYLinhaEntrada,CoordenadaYLinhaSaida)):  
-            ContadorSaidas += 1
+    if (TestaInterseccaoEntrada(CoordenadaYCentroContorno,CoordenadaYLinhaEntrada,CoordenadaYLinhaSaida)):
+        ContadorEntradas += 1
+
+    if (TestaInterseccaoSaida(CoordenadaYCentroContorno,CoordenadaYLinhaEntrada,CoordenadaYLinhaSaida)):
+        ContadorSaidas += 1
 
         #Se necessario, descomentar as lihas abaixo para mostrar os frames utilizados no processamento da imagem
         #cv2.imshow("Frame binarizado", FrameThresh)
         #cv2.waitKey(1);
         #cv2.imshow("Frame com subtracao de background", FrameDelta)
         #cv2.waitKey(1);
-
-
-    print "Contornos encontrados: "+str(QtdeContornos)
+    #print "Contornos encontrados: " + str(QtdeContornos)
 
     #Escreve na imagem o numero de pessoas que entraram ou sairam da area vigiada
     cv2.putText(Frame, "Entradas: {}".format(str(ContadorEntradas)), (10, 50),
